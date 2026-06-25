@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aether Security Wiki | Confidential Documentation</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="internal-page">
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon"></div>
+        AETHER <span
+          style="font-size: 0.8rem; background: #ef4444; color: #fff; padding: 0.15rem 0.5rem; border-radius: 4px; margin-left: 0.5rem; letter-spacing: normal;">INTERNAL</span>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><button class="btn-portal" onclick="alert('Corporate VPN connected successfully.')"
+              style="border-color: var(--accent-emerald); color: var(--accent-emerald);">Internal VPN Active</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Warning Banner -->
+    <div class="internal-banner">
+      <span style="font-size: 1.5rem;">⚠️</span>
+      <div>
+        <strong>PROPRIETARY & CONFIDENTIAL INFORMATION.</strong> Unauthorized access is strictly prohibited and subject
+        to legal action.
+      </div>
+    </div>
+
+    <!-- Wiki Layout -->
+    <div class="wiki-layout">
+
+      <!-- Sidebar -->
+      <aside class="wiki-sidebar">
+        <h4>Aether Dev Wiki</h4>
+        <ul class="wiki-nav">
+          <li><a href="#" class="wiki-nav-link active">🚀 System Migration Status</a></li>
+          <li><a href="#" class="wiki-nav-link"
+              onclick="alert('Access Denied. Section restricted to Security Administrators.')">🔑 Key Management
+              Service</a></li>
+          <li><a href="#" class="wiki-nav-link"
+              onclick="alert('Access Denied. Section restricted to Infrastructure Team.')">🐳 Docker Swarm Config</a>
+          </li>
+          <li><a href="#" class="wiki-nav-link" onclick="alert('Access Denied. Section restricted to DB Admins.')">🗄️
+              PostgreSQL Credentials</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Wiki Content -->
+      <section class="wiki-content">
+        <h2>System Migration Status & staging-console</h2>
+        <div class="wiki-meta">
+          <span><strong>Owner:</strong> Devops-team-alpha</span>
+          <span><strong>Last Modified:</strong> 2026-06-20</span>
+          <span><strong>Classification:</strong> Restricted</span>
+        </div>
+
+        <p>This document details our ongoing migration from local test runners to the new containerized staging
+          environment. The goal is to finish deployment isolation prior to the external code audit next month.</p>
+
+        <h3>Migration TODO Checklist</h3>
+        <ul class="todo-list">
+          <li class="todo-item done">
+            <span class="todo-checkbox"></span>
+            <span>Configure internal DNS bindings for the main portal</span>
+          </li>
+          <li class="todo-item done">
+            <span class="todo-checkbox"></span>
+            <span>Establish VPN boundary firewall rules for DB assets</span>
+          </li>
+          <li class="todo-item">
+            <span class="todo-checkbox"></span>
+            <span>Disable diagnostic dashboard endpoints on public interfaces</span>
+          </li>
+          <li class="todo-item">
+            <span class="todo-checkbox"></span>
+            <span>Implement rate limiting and WAF blocks on contact forms</span>
+          </li>
+        </ul>
+
+        <!-- Crucial Clue -->
+        <div class="note-box">
+          <h4>📌 Temporary Staging Environment Console</h4>
+          <p>The temporary staging diagnostics console is active at <a href="staging-console-8c3b.html"
+              style="color: var(--accent-cyan); text-decoration: underline; font-weight: 600;">/staging-console-8c3b.html</a>.
+            Use this console to verify environment variables, active services, and debug logs. Ensure this panel is
+            deleted or restricted prior to public release.</p>
+        </div>
+
+        <p>For credentials verification issues, contact the system administrator team directly or check the secrets
+          store dashboard.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-copy">
+        &copy; 2026 Aether Security Systems. Internal Wiki Platform. Confidential.
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
