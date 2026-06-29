@@ -2,6 +2,12 @@
 //  BLINDSPOT CTF — Puzzle Game Logic
 // ============================================================
 
+
+const _fp = ['QlND', 'VEZ7', 'V0VM', 'Q09N', 'RV9U', 'T19D', 'VEZ9'];
+function _rf() {
+  return atob(_fp.join(''));
+}
+
 // Game State
 let gridSize = 5;
 let tiles = [];        // Current board state: tiles[position] = tileId
@@ -14,15 +20,7 @@ let showNumbers = false;
 let selectedTileIndex = null;  // click-to-swap state
 let gameWon = false;           // guard so victory fires only once
 
-// Tiles that are visually pure-black (avg luminance < 5) — confirmed by pixel analysis of puzzle.png
-// For this 5x5 grid:
-//   Tile 0  (r0,c0): 0.18  — pure black corner
-//   Tile 4  (r0,c4): 0.36  — pure black corner
-//   Tile 5  (r1,c0): 0.17  — pure black left edge
-//   Tile 9  (r1,c4): 0.37  — pure black right edge
-//   Tile 20 (r4,c0): 2.46  — nearly black corner
-//   Tile 24 (r4,c4): 3.14  — nearly black corner
-// These tiles are interchangeable in the win check.
+
 const DARK_TILES = new Set([0, 4, 5, 9, 20, 24]);
 
 // ── Web Audio Synth ──────────────────────────────────────────
@@ -107,7 +105,7 @@ class Particle {
     this.rot = Math.random() * 360;
     this.rotV = Math.random() * 10 - 5;
     this.isDigit = Math.random() > 0.5;
-    const palette = ['#a855f7','#c77dff','#ff007f','#00ffff','#ffffff','#00ff66'];
+    const palette = ['#a855f7', '#c77dff', '#ff007f', '#00ffff', '#ffffff', '#00ff66'];
     this.color = palette[Math.floor(Math.random() * palette.length)];
   }
   update() {
@@ -194,7 +192,7 @@ function initGame() {
 function renderBoard() {
   board.innerHTML = '';
   board.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
-  board.style.gridTemplateRows    = `repeat(${gridSize}, 1fr)`;
+  board.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
   board.classList.toggle('show-numbers', showNumbers);
 
   tiles.forEach((tileId, position) => {
@@ -207,8 +205,8 @@ function renderBoard() {
     const row = Math.floor(tileId / gridSize);
     const factor = gridSize - 1;
 
-    tile.style.backgroundImage    = "url('puzzle.png')";
-    tile.style.backgroundSize     = `${gridSize * 100}% ${gridSize * 100}%`;
+    tile.style.backgroundImage = "url('puzzle.png')";
+    tile.style.backgroundSize = `${gridSize * 100}% ${gridSize * 100}%`;
     tile.style.backgroundPosition = factor === 0
       ? '0% 0%'
       : `${(col / factor) * 100}% ${(row / factor) * 100}%`;
@@ -220,13 +218,13 @@ function renderBoard() {
     num.textContent = tileId + 1;
     tile.appendChild(num);
 
-    tile.addEventListener('dragstart',  handleDragStart);
-    tile.addEventListener('dragover',   handleDragOver);
-    tile.addEventListener('dragenter',  handleDragEnter);
-    tile.addEventListener('dragleave',  handleDragLeave);
-    tile.addEventListener('drop',       handleDrop);
-    tile.addEventListener('dragend',    handleDragEnd);
-    tile.addEventListener('click',      handleTileClick);
+    tile.addEventListener('dragstart', handleDragStart);
+    tile.addEventListener('dragover', handleDragOver);
+    tile.addEventListener('dragenter', handleDragEnter);
+    tile.addEventListener('dragleave', handleDragLeave);
+    tile.addEventListener('drop', handleDrop);
+    tile.addEventListener('dragend', handleDragEnd);
+    tile.addEventListener('click', handleTileClick);
 
     board.appendChild(tile);
   });
@@ -255,9 +253,9 @@ function handleDragStart(e) {
   playSound('select');
   startTimer();
 }
-function handleDragOver(e)  { e.preventDefault(); return false; }
-function handleDragEnter()  { if (parseInt(this.dataset.index) !== dragSrcIndex) this.classList.add('hovered'); }
-function handleDragLeave()  { this.classList.remove('hovered'); }
+function handleDragOver(e) { e.preventDefault(); return false; }
+function handleDragEnter() { if (parseInt(this.dataset.index) !== dragSrcIndex) this.classList.add('hovered'); }
+function handleDragLeave() { this.classList.remove('hovered'); }
 function handleDrop(e) {
   e.stopPropagation(); e.preventDefault();
   const src = parseInt(e.dataTransfer.getData('text/plain'));
@@ -266,7 +264,7 @@ function handleDrop(e) {
   return false;
 }
 function handleDragEnd() {
-  document.querySelectorAll('.puzzle-tile').forEach(t => t.classList.remove('selected','hovered'));
+  document.querySelectorAll('.puzzle-tile').forEach(t => t.classList.remove('selected', 'hovered'));
 }
 
 // ── Click-to-Swap ─────────────────────────────────────────────
@@ -335,6 +333,8 @@ function triggerVictory() {
 
   // Small delay so the board settles visually before the popup appears
   setTimeout(() => {
+    // Inject the flag into the DOM only at the moment of victory
+    document.getElementById('flag-text').textContent = _rf();
     document.getElementById('victory-modal').classList.add('show');
   }, 600);
 }
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Preview modal
-  const previewBox   = document.getElementById('preview-box');
+  const previewBox = document.getElementById('preview-box');
   const previewModal = document.getElementById('preview-modal');
   const closePreview = document.getElementById('close-preview-btn');
 
@@ -379,12 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === previewModal) { playSound('click'); previewModal.classList.remove('show'); }
   });
 
-  // Copy flag
-  const copyBtn  = document.getElementById('copy-flag-btn');
-  const flagText = document.getElementById('flag-text').textContent.trim();
-  const toast    = document.getElementById('copy-toast');
+  // Copy flag — read from DOM at click time (flag is injected only after victory)
+  const copyBtn = document.getElementById('copy-flag-btn');
+  const toast = document.getElementById('copy-toast');
 
   copyBtn.addEventListener('click', () => {
+    const flagText = document.getElementById('flag-text').textContent.trim();
     navigator.clipboard.writeText(flagText)
       .then(() => {
         playSound('click');
