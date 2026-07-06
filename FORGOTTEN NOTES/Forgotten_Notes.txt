@@ -1,9 +1,0 @@
-Challenge: Forgotten Notes
-Category: Web
-Difficulty: Easy
-Author: SYPHERR
-Description
-Aether Security claims to have the most secure corporate infrastructure. They recently migrated their public portal to containerized systems and had an external company review their external perimeter. However, we suspect one of their developers left behind some configuration files and temporary internal developer logs. Can you investigate the site, trace the clues left by the engineering team, and retrieve the flag?
-Flag Format: BSCTF{...}
-Given URL
-http://<challenge-ip>:<port>
