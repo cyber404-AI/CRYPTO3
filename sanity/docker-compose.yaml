@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  sanity:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sanity-ctf-challenge
+    ports:
+      - "8082:80"
+    restart: unless-stopped
